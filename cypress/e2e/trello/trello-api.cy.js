@@ -7,7 +7,7 @@ context('Trello API Challenge', () => {
   let lastCreatedBoardId
   let lastCreatedCardId
 
-  it.skip('Should create a new board', () => {
+  it('Should create a new board', () => {
     cy.createBoard(fixData.newBoard)
       .should(({status, body}) => {
         expect(status).to.eq(200)
@@ -16,6 +16,24 @@ context('Trello API Challenge', () => {
         expect(body).to.have.property('id')
         lastCreatedBoardId = body.id
       })
+    
+    // just confirming
+    cy.get('@new board')
+      .then(({body: {id}}) => {
+        cy.request('GET', `/1/boards/${id}/?key=${appKey}&token=${token}`).as('get board')
+          .should(({status, body}) => {
+            expect(status).to.eq(200)
+            expect(body).to.have.property('id').to.eq(id)
+            expect(body).to.have.property('name').to.eq(fixData.newBoard.name)
+            expect(body).to.have.property('desc').to.eq(fixData.newBoard.desc)
+          })
+      })
+    
+    // cleaning
+    cy.get('@get board')
+      .then(({body: {id}}) => {
+        cy.request('DELETE', `/1/boards/${id}/?key=${appKey}&token=${token}`).as('board delete')
+      }).as('cleaning')
   })
 
   it.skip('Should create a new card', () => {
@@ -34,7 +52,7 @@ context('Trello API Challenge', () => {
       })
   })
 
-  it('Should edit a card', () => {
+  it.skip('Should edit a card', () => {
     cy.editCard(fixData.fixedCardToUpdate.id, {
       name: fixData.fixedCardToUpdate.editedName,
       desc: fixData.fixedCardToUpdate.editedDesc,
@@ -49,7 +67,7 @@ context('Trello API Challenge', () => {
       expect(body).to.have.property('idList').to.eq(fixData.fixedList.doing.id)
     })
     
-    cy.get('@card editing')
+    cy.get('@card edit')
       .then(() => {
         cy.request('GET',
           `/1/cards/${fixData.fixedCardToUpdate.id}/?key=${appKey}&token=${token}`

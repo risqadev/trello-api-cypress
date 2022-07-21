@@ -26,7 +26,7 @@
 
 import {appKey, token} from '../../secrets.json'
 
-Cypress.Commands.add('getBoard', (nameOrId) => {
+Cypress.Commands.add('getBoards', (nameOrId) => {
   cy.request('GET', `/1/members/me/boards/?key=${appKey}&token=${token}`)
     .as('get board')
     .then(({status, body}) => {
@@ -74,5 +74,5 @@ Cypress.Commands.add('createCard', (cardData) => {
 Cypress.Commands.add('editCard', (cardId, newDataCard) => {
   cy.request('PUT', `/1/cards/${cardId}/?key=${appKey}&token=${token}`, {
     ...newDataCard
-  }).as('card editing')
+  }).as('card edit')
 })
