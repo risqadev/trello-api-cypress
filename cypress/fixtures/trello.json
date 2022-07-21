@@ -18,6 +18,22 @@
       "name": "Done"
     }
   },
+  "newBoard": {
+    "name": "Ricardo's board with Cypress",
+    "desc": "This board was automatically created by Ricardo using Cypress"
+  },
+  "boardToDelete": {
+    "name": "Board to delete with Cypress",
+    "desc": "This board was created to be removed in a Cypress test. If it's still here, something might have gone wrong."
+  },
+  "newCard": {
+    "name": "Card created automatically with Cypress",
+    "desc": "This card was created by Ricardo using Cypress"
+  },
+  "cardToDelete": {
+    "name": "Card to delete with Cypress",
+    "desc": "This card was created to be removed in a Cypress test. If it's still here, something might have gone wrong."
+  },
   "fixedCard": {
     "id": "62d957abe149bb27fe419b03",
     "name": "Fixed card to Cypress tests"
@@ -28,16 +44,5 @@
     "desc": "This card was created to tests with Cypress",
     "editedName": "Fixed card EDITED with Cypress",
     "editedDesc": "This card was EDITED with Cypress"
-  },
-  "cardsToDelete": {
-    "namePrefix": "Card to delete with Cypress"
-  },
-  "newBoard": {
-    "name": "Ricardo's board with Cypress",
-    "desc": "This board was automatically created by Ricardo using Cypress"
-  },
-  "newCard": {
-    "name": "Card created automatically with Cypress",
-    "desc": "This card was created by Ricardo using Cypress"
   }
 }
