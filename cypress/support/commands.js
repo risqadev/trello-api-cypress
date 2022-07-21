@@ -37,12 +37,6 @@ Cypress.Commands.add('getBoards', (nameOrId) => {
     })
 })
 
-Cypress.Commands.add('createBoard', (boardData) => {
-  cy.request('POST', `/1/boards/?key=${appKey}&token=${token}`, {
-    ... boardData
-  }).as('new board')
-})
-
 Cypress.Commands.add('getList', (nameOrId, boardId) => {
   cy.request('GET', `/1/boards/${boardId}/lists/?key=${appKey}&token=${token}`)
     .as('get list')

@@ -7,14 +7,11 @@ context('Trello API Challenge', () => {
   let lastCreatedBoardId
   let lastCreatedCardId
 
-  it('Should create a new board', () => {
-    cy.createBoard(fixData.newBoard)
+  it.skip('Should create a new board', () => {
+    cy.request('POST', `/1/boards/?key=${appKey}&token=${token}`, fixData.newBoard).as('new board')
       .should(({status, body}) => {
         expect(status).to.eq(200)
-        expect(body).to.have.property('name').to.eq(fixData.newBoard.name)
-        expect(body).to.have.property('desc').to.eq(fixData.newBoard.desc)
         expect(body).to.have.property('id')
-        lastCreatedBoardId = body.id
       })
     
     // just confirming
@@ -23,7 +20,6 @@ context('Trello API Challenge', () => {
         cy.request('GET', `/1/boards/${id}/?key=${appKey}&token=${token}`).as('get board')
           .should(({status, body}) => {
             expect(status).to.eq(200)
-            expect(body).to.have.property('id').to.eq(id)
             expect(body).to.have.property('name').to.eq(fixData.newBoard.name)
             expect(body).to.have.property('desc').to.eq(fixData.newBoard.desc)
           })
@@ -40,16 +36,27 @@ context('Trello API Challenge', () => {
     cy.createCard({
       ...fixData.newCard,
       idList: fixData.fixedList.todo.id
+    }).should(({status, body}) => {
+      expect(status).to.eq(200)
+      expect(body).to.have.property('id')
     })
-      .should(({status, body}) => {
-        expect(status).to.eq(200)
-        expect(body).to.have.property('id')
-        expect(body).to.have.property('name').to.eq(fixData.newCard.name)
-        expect(body).to.have.property('desc').to.eq(fixData.newCard.desc)
-        expect(body).to.have.property('idBoard').to.eq(fixData.fixedBoard.id)
-        expect(body).to.have.property('idList').to.eq(fixData.fixedList.todo.id)
-        lastCreatedCardId = body.id
+
+    cy.get('@new card')
+      .then(({body: {id}}) => {
+        cy.request('GET', `/1/cards/${id}/?key=${appKey}&token=${token}`).as('get card')
+          .should(({status, body}) => {
+            expect(status).to.eq(200)
+            expect(body).to.have.property('name').to.eq(fixData.newCard.name)
+            expect(body).to.have.property('desc').to.eq(fixData.newCard.desc)
+            expect(body).to.have.property('idBoard').to.eq(fixData.fixedBoard.id)
+            expect(body).to.have.property('idList').to.eq(fixData.fixedList.todo.id)
+          })
       })
+
+    cy.get('@get card')
+      .then(({body: {id}}) => {
+        cy.request('DELETE', `/1/cards/${id}/?key=${appKey}&token=${token}`).as('delete card')
+      }).as('cleaning')
   })
 
   it.skip('Should edit a card', () => {
