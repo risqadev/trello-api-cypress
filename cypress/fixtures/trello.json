@@ -1,0 +1,43 @@
+{
+  "fixedBoard": {
+    "id": "62d95620cfdfa313983bd023",
+    "name": "Fixed board to Cypress tests",
+    "desc": "This board was created for tests with Cypress"
+  },
+  "fixedList": {
+    "todo": {
+      "id": "62d95620cfdfa313983bd02a",
+      "name": "To Do"
+    },
+    "doing": {
+      "id": "62d95620cfdfa313983bd02b",
+      "name": "Doing"
+    },
+    "done": {
+      "id": "62d95620cfdfa313983bd02c",
+      "name": "Done"
+    }
+  },
+  "fixedCard": {
+    "id": "62d957abe149bb27fe419b03",
+    "name": "Fixed card to Cypress tests"
+  },
+  "fixedCardToUpdate": {
+    "id": "62d958cda3ff0b7b2ad748f3",
+    "name": "Fixed card to edit with Cypress",
+    "desc": "This card was created to tests with Cypress",
+    "editedName": "Fixed card EDITED with Cypress",
+    "editedDesc": "This card was EDITED with Cypress"
+  },
+  "cardsToDelete": {
+    "namePrefix": "Card to delete with Cypress"
+  },
+  "newBoard": {
+    "name": "Ricardo's board with Cypress",
+    "desc": "This board was automatically created by Ricardo using Cypress"
+  },
+  "newCard": {
+    "name": "Card created automatically with Cypress",
+    "desc": "This card was created by Ricardo using Cypress"
+  }
+}
