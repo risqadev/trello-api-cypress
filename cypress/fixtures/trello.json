@@ -38,7 +38,7 @@
     "id": "62d957abe149bb27fe419b03",
     "name": "Fixed card to Cypress tests"
   },
-  "fixedCardToUpdate": {
+  "cardToUpdate": {
     "id": "62d958cda3ff0b7b2ad748f3",
     "name": "Fixed card to edit with Cypress",
     "desc": "This card was created to tests with Cypress",

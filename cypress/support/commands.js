@@ -26,26 +26,16 @@
 
 import {appKey, token} from '../../secrets.json'
 
-Cypress.Commands.add('getBoards', (nameOrId) => {
-  cy.request('GET', `/1/members/me/boards/?key=${appKey}&token=${token}`)
-    .as('get board')
-    .then(({status, body}) => {
-      expect(status).to.eq(200)
-      expect(body).to.be.an('array').and.not.to.be.empty
-      const board = body.find(({name, id}) => (name === nameOrId || id === nameOrId))
-      return board
-    })
+Cypress.Commands.add('createCard', (cardData) => {
+  cy.request('POST', `/1/cards/?key=${appKey}&token=${token}`, {
+    ... cardData
+  }).as('new card')
 })
 
-Cypress.Commands.add('getList', (nameOrId, boardId) => {
-  cy.request('GET', `/1/boards/${boardId}/lists/?key=${appKey}&token=${token}`)
-    .as('get list')
-    .then(({status, body}) => {
-      expect(status).to.eq(200)
-      expect(body).to.be.an('array').and.not.to.be.empty
-      const list = body.find(({name, id}) => (name === nameOrId || id === nameOrId))
-      return list
-    })
+Cypress.Commands.add('editCard', (cardId, newDataCard) => {
+  cy.request('PUT', `/1/cards/${cardId}/?key=${appKey}&token=${token}`, {
+    ...newDataCard
+  }).as('card edit')
 })
 
 Cypress.Commands.add('findCardsByName', (partOfName, listId) => {
@@ -57,16 +47,4 @@ Cypress.Commands.add('findCardsByName', (partOfName, listId) => {
       const cards = body.filter(({name}) => name.includes(partOfName))
       return cards
     })
-})
-
-Cypress.Commands.add('createCard', (cardData) => {
-  cy.request('POST', `/1/cards/?key=${appKey}&token=${token}`, {
-    ... cardData
-  }).as('new card')
-})
-
-Cypress.Commands.add('editCard', (cardId, newDataCard) => {
-  cy.request('PUT', `/1/cards/${cardId}/?key=${appKey}&token=${token}`, {
-    ...newDataCard
-  }).as('card edit')
 })
