@@ -32,17 +32,18 @@
   },
   "cardToDelete": {
     "name": "Card to delete with Cypress",
-    "desc": "This card was created to be removed in a Cypress test. If it's still here, something might have gone wrong."
+    "desc": "This card was created to be removed in a Cypress test. If it's still here, something might have gone wrong.",
+    "idList": "62d95620cfdfa313983bd02a"
   },
   "fixedCard": {
-    "id": "62d957abe149bb27fe419b03",
-    "name": "Fixed card to Cypress tests"
-  },
-  "cardToUpdate": {
     "id": "62d958cda3ff0b7b2ad748f3",
     "name": "Fixed card to edit with Cypress",
     "desc": "This card was created to tests with Cypress",
-    "editedName": "Fixed card EDITED with Cypress",
-    "editedDesc": "This card was EDITED with Cypress"
+    "idList": "62d95620cfdfa313983bd02a"
+  },
+  "cardEdit": {
+    "name": "Fixed card EDITED with Cypress",
+    "desc": "This card was EDITED with Cypress",
+    "idList": "62d95620cfdfa313983bd02b"
   }
 }
