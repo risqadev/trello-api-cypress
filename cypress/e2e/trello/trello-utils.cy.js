@@ -3,7 +3,7 @@
 import {appKey, token} from '../../../secrets.json'
 import fixData from '../../fixtures/trello.json'
 
-context('Utils', () => {
+context.skip('Utils', () => {
   it('Should remove a mass of cards', () => {
     const cardsName = "Fixed card"
     cy.findCardsByName(cardsName, fixData.fixedList.doing.id)

@@ -3,7 +3,7 @@
 import {appKey, token} from '../../../secrets.json'
 import fixData from '../../fixtures/trello.json'
 
-describe('Trello API - Boards', () => {
+describe.skip('Trello API - Boards', () => {
   it('Should create a new board', () => {
     cy.request('POST', `/1/boards/?key=${appKey}&token=${token}`, fixData.newBoard).as('new board')
       .should(({status, body}) => {
