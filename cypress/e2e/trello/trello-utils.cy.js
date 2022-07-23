@@ -5,8 +5,8 @@ import fixData from '../../fixtures/trello.json'
 
 context('Utils', () => {
   it('Should remove a mass of cards', () => {
-    const cardsName = fixData.cardToDelete.name
-    cy.findCardsByName(cardsName, fixData.fixedList.todo.id)
+    const cardsName = "Fixed card"
+    cy.findCardsByName(cardsName, fixData.fixedList.doing.id)
       .then(cards => {
         for (const card of cards) {
           cy.request('DELETE', `/1/cards/${card.id}/?key=${appKey}&token=${token}`)
