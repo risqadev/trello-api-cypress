@@ -1,59 +1,59 @@
 {
-  "fixedBoard": {
-    "id": "62d95620cfdfa313983bd023",
-    "name": "Fixed board to Cypress tests",
-    "desc": "This board was created for tests with Cypress"
-  },
-  "auxiliaryBoard": {
-    "id": "62db402c88f0a042b6f9cb1c"
-  },
-  "fixedList": {
-    "todo": {
-      "id": "62d95620cfdfa313983bd02a",
-      "name": "To Do"
+  "fixed": {
+    "board": {
+      "id": "62d95620cfdfa313983bd023",
+      "name": "Fixed board to Cypress tests",
+      "desc": "This board was created for tests with Cypress"
     },
-    "doing": {
-      "id": "62d95620cfdfa313983bd02b",
-      "name": "Doing"
+    "auxBoard": {
+      "id": "62db402c88f0a042b6f9cb1c"
     },
-    "done": {
-      "id": "62d95620cfdfa313983bd02c",
-      "name": "Done"
+    "list": {
+      "todo": {
+        "id": "62d95620cfdfa313983bd02a",
+        "name": "To Do"
+      },
+      "doing": {
+        "id": "62d95620cfdfa313983bd02b",
+        "name": "Doing"
+      },
+      "done": {
+        "id": "62d95620cfdfa313983bd02c",
+        "name": "Done"
+      }
+    },
+    "card": {
+      "id": "62d958cda3ff0b7b2ad748f3",
+      "name": "Fixed card to tests with Cypress",
+      "desc": "This card was created to tests with Cypress",
+      "idList": "62d95620cfdfa313983bd02a"
     }
   },
-  "newBoard": {
-    "name": "Ricardo's board with Cypress",
-    "desc": "This board was automatically created by Ricardo using Cypress"
+  "new" : {
+    "board": {
+      "name": "Board created with Cypress",
+      "desc": "This board was automatically created by Ricardo using Cypress"
+    },
+    "card": {
+      "name": "Card created with Cypress",
+      "desc": "This card was automatically created by Ricardo using Cypress"
+    }
   },
-  "boardToDelete": {
-    "name": "Board to delete with Cypress",
-    "desc": "This board was created to be removed in a Cypress test. If it's still here, something might have gone wrong."
+  "edit": {
+    "card": {
+      "name": "Card EDITED with Cypress",
+      "desc": "This card was automatically EDITED by Ricardo using Cypress",
+      "idList": "62d95620cfdfa313983bd02b"
+    }
   },
-  "newCard": {
-    "name": "Card created automatically with Cypress",
-    "desc": "This card was created by Ricardo using Cypress"
-  },
-  "cardToDelete": {
-    "name": "Card to delete with Cypress",
-    "desc": "This card was created to be removed in a Cypress test. If it's still here, something might have gone wrong.",
-    "idList": "62d95620cfdfa313983bd02a"
-  },
-  "fixedCard": {
-    "id": "62d958cda3ff0b7b2ad748f3",
-    "name": "Fixed card to tests with Cypress",
-    "desc": "This card was created to tests with Cypress",
-    "idList": "62d95620cfdfa313983bd02a"
-  },
-  "cardEdit": {
-    "name": "Fixed card EDITED with Cypress",
-    "desc": "This card was EDITED with Cypress",
-    "idList": "62d95620cfdfa313983bd02b"
-  },
-  "fakeCard": {
-    "id": "61bac1b3445f8834aaab8a5b",
-    "name": "Fake card",
-    "desc": "This is a fake card and not exists in the system",
-    "idList": "6bd02c20cfdfa31398395620",
-    "idCardSource": "60cac04441627253aad6a9c0"
+  "fake": {
+    "list": {
+      "id": "6bd02c20cfdfa31398395620"
+    },
+    "card": {
+      "id": "61bac1b3445f8834aaab8a5b",
+      "name": "Fake card",
+      "desc": "This is a fake card and not exists in the system"
+    }
   }
 }
