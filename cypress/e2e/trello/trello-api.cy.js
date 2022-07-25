@@ -1,6 +1,5 @@
 /// <reference types='cypress' />
 
-import {appKey, token} from '../../../secrets.json'
 import fix from '../../fixtures/trello.json'
 
 describe('Trello API - Cards', () => {
@@ -13,27 +12,33 @@ describe('Trello API - Cards', () => {
         expect(status).to.eq(200)
         expect(body).to.have.property('id')
       }).then(({body: {id}}) => {
-        cy.request('GET', `/1/cards/${id}/?key=${appKey}&token=${token}`).as('get card')
-          .should(({status, body}) => {
+        cy.request({
+          method: 'GET',
+          url: `/1/cards/${id}/`
+        }).as('get card')
+          .should(({status, body: {name, desc, idBoard, idList}}) => {
             expect(status).to.eq(200)
-            expect(body).to.have.property('name').to.eq(fix.new.card.name)
-            expect(body).to.have.property('desc').to.eq(fix.new.card.desc)
-            expect(body).to.have.property('idBoard').to.eq(fix.fixed.board.id)
-            expect(body).to.have.property('idList').to.eq(fix.fixed.list.todo.id)
+            expect(name).to.eq(fix.new.card.name)
+            expect(desc).to.eq(fix.new.card.desc)
+            expect(idBoard).to.eq(fix.fixed.board.id)
+            expect(idList).to.eq(fix.fixed.list.todo.id)
           })
       })
   
       // cleaning
       cy.get('@get card')
         .then(({body: {id}}) => {
-          cy.request('DELETE', `/1/cards/${id}/?key=${appKey}&token=${token}`).as('delete card')
+          cy.request({
+            method: 'DELETE',
+            url: `/1/cards/${id}/`
+          }).as('delete card')
         }).as('cleaning')
     })
 
     it('Should not create a card when idList is missing', () => {
       cy.request({
         method: 'POST',
-        url: `/1/cards/?key=${appKey}&token=${token}`,
+        url: `/1/cards/`,
         failOnStatusCode: false,
         body: {
           ...fix.new.card
@@ -44,7 +49,7 @@ describe('Trello API - Cards', () => {
     it('Should not create a card when idList is invalid', () => {
       cy.request({
         method: 'POST',
-        url: `/1/cards/?key=${appKey}&token=${token}`,
+        url: `/1/cards/`,
         failOnStatusCode: false,
         body: {
           ...fix.new.card,
@@ -57,31 +62,37 @@ describe('Trello API - Cards', () => {
       cy.createCard({
         idCardSource: fix.fixed.card.id,
         idList: fix.fixed.list.doing.id
-      }).should(({status, body}) => {
+      }).should(({status, body: {id}}) => {
         expect(status).to.eq(200)
-        expect(body).to.have.property('id').not.eq(fix.fixed.card.id)
+        expect(id).not.eq(fix.fixed.card.id)
       }).then(({body: {id}}) => {
-        cy.request('GET', `/1/cards/${id}/?key=${appKey}&token=${token}`).as('get card')
-          .should(({status, body}) => {
+        cy.request({
+          method: 'GET',
+          url: `/1/cards/${id}/`
+        }).as('get card')
+          .should(({status, body: {name, desc, idBoard, idList}}) => {
             expect(status).to.eq(200)
-            expect(body).to.have.property('name').to.eq(fix.fixed.card.name)
-            expect(body).to.have.property('desc').to.eq(fix.fixed.card.desc)
-            expect(body).to.have.property('idBoard').to.eq(fix.fixed.board.id)
-            expect(body).to.have.property('idList').to.eq(fix.fixed.list.doing.id)
+            expect(name).to.eq(fix.fixed.card.name)
+            expect(desc).to.eq(fix.fixed.card.desc)
+            expect(idBoard).to.eq(fix.fixed.board.id)
+            expect(idList).to.eq(fix.fixed.list.doing.id)
           })
       })
   
       // cleaning
       cy.get('@get card')
         .then(({body: {id}}) => {
-          cy.request('DELETE', `/1/cards/${id}/?key=${appKey}&token=${token}`).as('delete card')
+          cy.request({
+            method: 'DELETE',
+            url: `/1/cards/${id}/`
+          }).as('delete card')
         }).as('cleaning')
     })
 
     it('Should not create a copy when idCardSource is invalid', () => {
       cy.request({
         method: 'POST',
-        url: `/1/cards/?key=${appKey}&token=${token}`,
+        url: `/1/cards/`,
         failOnStatusCode: false,
         body: {
           idCardSource: fix.fake.card.id,
@@ -97,15 +108,17 @@ describe('Trello API - Cards', () => {
       cy.editCard(fix.fixed.card.id, fix.edit.card).should(({status}) => {
         expect(status).to.eq(200)
       }).then(() => {
-        cy.request('GET',
-          `/1/cards/${fix.fixed.card.id}/?key=${appKey}&token=${token}`
-        ).as('get card')
-          .should(({body}) => {
-            expect(body).to.have.property('id').to.eq(fix.fixed.card.id)
-            expect(body).to.have.property('name').to.eq(fix.edit.card.name)
-            expect(body).to.have.property('desc').to.eq(fix.edit.card.desc)
-            expect(body).to.have.property('idBoard').to.eq(fix.fixed.board.id)
-            expect(body).to.have.property('idList').to.eq(fix.edit.card.idList)
+        cy.request({
+          method: 'GET',
+          url: `/1/cards/${fix.fixed.card.id}/`
+        }).as('get card')
+          .should(({status, body: {id, name, desc, idBoard, idList}}) => {
+            expect(status).to.eq(200)
+            expect(id).to.eq(fix.fixed.card.id)
+            expect(name).to.eq(fix.edit.card.name)
+            expect(desc).to.eq(fix.edit.card.desc)
+            expect(idBoard).to.eq(fix.fixed.board.id)
+            expect(idList).to.eq(fix.edit.card.idList)
           })
       })
   
@@ -117,7 +130,7 @@ describe('Trello API - Cards', () => {
     it('Should fail when card id is non-existent', () => {
       cy.request({
         method: 'PUT',
-        url: `/1/cards/${fix.fake.card.id}/?key=${appKey}&token=${token}`,
+        url: `/1/cards/${fix.fake.card.id}/`,
         failOnStatusCode: false,
         body: {
           ...fix.edit.card
@@ -128,7 +141,7 @@ describe('Trello API - Cards', () => {
     it('Should fail when idlist does not belong to idboard', () => {
       cy.request({
         method: 'PUT',
-        url: `/1/cards/${fix.fixed.card.id}/?key=${appKey}&token=${token}`,
+        url: `/1/cards/${fix.fixed.card.id}/`,
         failOnStatusCode: false,
         body: {
           ...fix.edit.card,
@@ -152,7 +165,10 @@ describe('Trello API - Cards', () => {
       cy.get('@new card')
         .then(({body: {id}}) => {
           createdId = id
-          cy.request('DELETE', `/1/cards/${id}/?key=${appKey}&token=${token}`).as('delete card')
+          cy.request({
+            method: 'DELETE',
+            url: `/1/cards/${id}/`
+          }).as('delete card')
             .its('status').should('be.equal', 200)
         })
       
@@ -160,7 +176,7 @@ describe('Trello API - Cards', () => {
         .then(() => {
           cy.request({
             method: 'GET',
-            url: `/1/cards/${createdId}/?key=${appKey}&token=${token}`,
+            url: `/1/cards/${createdId}/`,
             failOnStatusCode: false
           }).as('get card')
             .its('status').should('be.equal', 404)
@@ -170,7 +186,7 @@ describe('Trello API - Cards', () => {
     it('Should fail when card id is non-existent', () => {
       cy.request({
         method: 'DELETE',
-        url: `/1/cards/${fix.fake.card.id}/?key=${appKey}&token=${token}`,
+        url: `/1/cards/${fix.fake.card.id}/`,
         failOnStatusCode: false
       }).its('status').should('be.equal', 404)
     })

@@ -24,27 +24,42 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-import {appKey, token} from '../../secrets.json'
 
 Cypress.Commands.add('createCard', (cardData) => {
-  cy.request('POST', `/1/cards/?key=${appKey}&token=${token}`, {
-    ... cardData
+  cy.request({
+    method: 'POST',
+    url: `/1/cards/`,
+    body: { ...cardData }
   }).as('new card')
 })
 
 Cypress.Commands.add('editCard', (cardId, newDataCard) => {
-  cy.request('PUT', `/1/cards/${cardId}/?key=${appKey}&token=${token}`, {
-    ...newDataCard
+  cy.request({
+    method: 'PUT',
+    url: `/1/cards/${cardId}/`,
+    body: { ...newDataCard }
   }).as('card edit')
 })
 
 Cypress.Commands.add('findCardsByName', (partOfName, listId) => {
-  cy.request('GET', `/1/lists/${listId}/cards/?key=${appKey}&token=${token}`)
-    .as('get cards')
+  cy.request({
+    method: 'GET',
+    url: `/1/lists/${listId}/cards/`
+  }).as('get cards')
     .then(({status, body}) => {
       expect(status).to.eq(200)
       expect(body).to.be.an('array').and.not.to.be.empty
-      const cards = body.filter(({name}) => name.includes(partOfName))
-      return cards
+      return body.filter(({name}) => name.includes(partOfName))
     })
+})
+
+Cypress.Commands.overwrite('request', (originalFn, ...args) => {
+  const authorization = `OAuth oauth_consumer_key="${Cypress.env('APP_KEY')}", oauth_token="${Cypress.env('TOKEN')}"`
+  if (args.length === 1 && typeof(args[0]) === 'object') {
+    args[0].headers = {
+      ...args[0].headers,
+      authorization
+    }
+  }
+  return originalFn(...args)
 })

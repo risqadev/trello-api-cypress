@@ -1,16 +1,15 @@
 {
-  "name": "requests-for-tests",
+  "name": "trello-api-cypress",
   "version": "1.0.0",
-  "description": "",
+  "description": "Hands-on study project for testing the Trello API with Cypress.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Ricardo Camacho",
+  "license": "MIT",
   "devDependencies": {
     "cypress": "^10.3.1"
   }
