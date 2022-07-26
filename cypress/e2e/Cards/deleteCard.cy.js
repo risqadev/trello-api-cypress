@@ -1,4 +1,4 @@
-k/// <reference types='cypress' />
+/// <reference types='cypress' />
 
 import { getCard } from '../../services/Cards/getCard.request'
 import { createCard } from '../../services/Cards/postCard.request'

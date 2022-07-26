@@ -1,7 +1,9 @@
 /// <reference types='cypress' />
 
+import { requestHandler } from "../requestHandler"
+
 function getCardsByListId(listId) {
-  return cy.request({
+  return requestHandler({
     method: 'GET',
     url: `/1/lists/${listId}/cards/`
   }).as('get cards')

@@ -1,7 +1,9 @@
 /// <reference types='cypress' />
 
+import { requestHandler } from "../requestHandler"
+
 function getBoard(id) {
-  return cy.request({
+  return requestHandler({
     method: 'GET',
     url: `/1/boards/${id}/`,
     failOnStatusCode: false

@@ -1,7 +1,9 @@
 /// <reference types='cypress' />
 
+import { requestHandler } from "../requestHandler"
+
 function createBoard(data) {
-  return cy.request({
+  return requestHandler({
     method: 'POST',
     url: `/1/boards/`,
     body: { ...data },

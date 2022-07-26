@@ -1,7 +1,9 @@
 /// <reference types='cypress' />
 
+import { requestHandler } from "../requestHandler"
+
 function deleteBoard(id) {
-  return cy.request({
+  return requestHandler({
     method: 'DELETE',
     url: `/1/boards/${id}/`,
     failOnStatusCode: false
