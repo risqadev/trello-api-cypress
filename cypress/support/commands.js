@@ -25,34 +25,6 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 
-Cypress.Commands.add('createCard', (cardData) => {
-  cy.request({
-    method: 'POST',
-    url: `/1/cards/`,
-    body: { ...cardData }
-  }).as('new card')
-})
-
-Cypress.Commands.add('editCard', (cardId, newDataCard) => {
-  cy.request({
-    method: 'PUT',
-    url: `/1/cards/${cardId}/`,
-    body: { ...newDataCard }
-  }).as('card edit')
-})
-
-Cypress.Commands.add('findCardsByName', (partOfName, listId) => {
-  cy.request({
-    method: 'GET',
-    url: `/1/lists/${listId}/cards/`
-  }).as('get cards')
-    .then(({status, body}) => {
-      expect(status).to.eq(200)
-      expect(body).to.be.an('array').and.not.to.be.empty
-      return body.filter(({name}) => name.includes(partOfName))
-    })
-})
-
 Cypress.Commands.overwrite('request', (originalFn, ...args) => {
   const authorization = `OAuth oauth_consumer_key="${Cypress.env('APP_KEY')}", oauth_token="${Cypress.env('TOKEN')}"`
   if (args.length === 1 && typeof(args[0]) === 'object') {
