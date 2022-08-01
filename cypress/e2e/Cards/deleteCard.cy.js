@@ -10,21 +10,17 @@ describe('Card delete', () => {
   context('Success scenarios', () => {
 
     it('Should remove card if sent an existing id', () => {
-      let createdId
-  
       // preparing
       createCard({
         ...fix.new.card,
         idList: fix.fixed.list.todo.id
       }).as('preparing')
-  
+
       cy.get('@new card').then(({body: {id}}) => {
-        createdId = id
         deleteCard(id).its('status').should('be.equal', 200)
-      })
-      
-      cy.get('@delete card').then(() => {
-        getCard(createdId).its('status').should('be.equal', 404)
+        return cy.get('@delete card').then(() => id )
+      }).should(id => {
+        getCard(id).its('status').should('be.equal', 404)
       })
     })
   })
