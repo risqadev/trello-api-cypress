@@ -1,6 +1,6 @@
 /// <reference types='cypress' />
 
-import { requestHandler } from "../requestHandler"
+import { requestHandler } from "../../utils/requestHandler"
 
 function deleteCard(id) {
   return requestHandler({
