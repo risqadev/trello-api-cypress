@@ -36,7 +36,8 @@
     },
     "card": {
       "name": "Card created with Cypress",
-      "desc": "This card was automatically created by Ricardo using Cypress"
+      "desc": "This card was automatically created by Ricardo using Cypress",
+      "start": "2022-08-16T03:00:00.000Z"
     }
   },
   "edit": {

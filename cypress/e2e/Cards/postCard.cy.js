@@ -1,5 +1,8 @@
 /// <reference types='cypress' />
 
+import { createBoard } from '../../services/Boards/postBoard.request'
+import { getListsFromBoard } from '../../services/Lists/getListsFromBoard.request'
+import { deleteBoard } from '../../services/Boards/deleteBoard.request'
 import { getCard } from '../../services/Cards/getCard.request'
 import { createCard } from '../../services/Cards/postCard.request'
 import { deleteCard } from '../../services/Cards/deleteCard.request'
@@ -8,22 +11,102 @@ import fix from '../../fixtures/trello.json'
 
 describe('Card creation', () => {
   context('Success scenarios', () => {
-    it('Should create a new card successfuly if sent a valid idList', () => {
+    it.only('Should create a new card successfuly if sent only a valid idList', () => {
+      // preparing
+      createBoard({...fix.new.board}).then(({status, body}) => {
+        // expect(status).to.eq(200)
+        // expect(body).to.have.property('id')
+        getListsFromBoard(body.id)
+      })
+      
+      cy.get('@get lists').then(({status, body}) => {
+        const [ firstList ] = body
+        // expect(status).to.eq(200)
+        // expect(body).to.be.an('array').and.not.to.be.empty
+        createCard({
+          idList: firstList.id
+        }).should(({status, body}) => {
+          const {name, desc, idBoard, idList, start, dueComplete} = body
+          expect(status).to.eq(200)
+          expect(body).to.have.property('id')
+          expect(name).to.be.empty
+          expect(desc).to.be.empty
+          expect(start).to.be.null
+          expect(dueComplete).to.be.false
+          expect(idList).to.eq(firstList.id)
+          expect(idBoard).to.eq(firstList.idBoard)
+        })
+      })
+  
+      // cleaning
+      cy.get('@new card').then(({body: {id, idBoard}}) => 
+        deleteCard(id)
+          .then(() => 
+            deleteBoard(idBoard)
+          )
+      ).as('cleaning')
+
+    })
+
+    it(`Should create a new card successfuly if sent a valid idList and other data, including "pos: 'top'" and "dueComplete: true".`, () => {
       createCard({
         ...fix.new.card,
-        idList: fix.fixed.list.todo.id
-      }).should(({status, body}) => {
+        pos: 'top',
+        dueComplete: true
+      }).should(({status, body: {name, desc, pos, dueComplete, idBoard, idList}}) => {
         expect(status).to.eq(200)
         expect(body).to.have.property('id')
-      }).then(({body: {id}}) => {
-        getCard(id)
-          .should(({status, body: {name, desc, idBoard, idList}}) => {
-            expect(status).to.eq(200)
-            expect(name).to.eq(fix.new.card.name)
-            expect(desc).to.eq(fix.new.card.desc)
-            expect(idBoard).to.eq(fix.fixed.board.id)
-            expect(idList).to.eq(fix.fixed.list.todo.id)
-          })
+        expect(pos).to.eq('top')
+        expect(dueComplete).to.eq(true)
+        expect(name).to.eq(fix.new.card.name)
+        expect(desc).to.eq(fix.new.card.desc)
+        expect(start).to.eq(fix.new.card.start)
+        expect(idList).to.eq(fix.fixed.list.todo.id)
+        expect(idBoard).to.eq(fix.fixed.board.id)
+      })
+  
+      // cleaning
+      cy.get('@get card').then(({body: {id}}) => 
+        deleteCard(id)
+      ).as('cleaning')
+    })
+
+    it(`Should create a new card successfuly if sent a valid idList and other data, including "pos: 'bottom'" and "dueComplete: false".`, () => {
+      createCard({
+        ...fix.new.card,
+        pos: 'top',
+        dueComplete: true
+      }).should(({status, body: {name, desc, pos, dueComplete, idBoard, idList}}) => {
+        expect(status).to.eq(200)
+        expect(pos).to.eq('bottom')
+        expect(dueComplete).to.eq(false)
+        // expect(body).to.have.property('id')
+        // expect(name).to.eq(fix.new.card.name)
+        // expect(desc).to.eq(fix.new.card.desc)
+        // expect(start).to.eq(fix.new.card.start)
+        // expect(idList).to.eq(fix.fixed.list.todo.id)
+        // expect(idBoard).to.eq(fix.fixed.board.id)
+      })
+  
+      // cleaning
+      cy.get('@get card').then(({body: {id}}) => 
+        deleteCard(id)
+      ).as('cleaning')
+    })
+
+    it(`Should create a new card successfuly if sent a valid idList and other data, including "pos" as a positive float number.`, () => {
+      createCard({
+        ...fix.new.card,
+        pos: 0.0001
+      }).should(({status, body: {name, desc, pos, dueComplete, idBoard, idList}}) => {
+        expect(status).to.eq(200)
+        expect(pos).to.eq(0.0001)
+        // expect(body).to.have.property('id')
+        // expect(name).to.eq(fix.new.card.name)
+        // expect(desc).to.eq(fix.new.card.desc)
+        // expect(start).to.eq(fix.new.card.start)
+        // expect(idList).to.eq(fix.fixed.list.todo.id)
+        // expect(idBoard).to.eq(fix.fixed.board.id)
       })
   
       // cleaning
@@ -57,7 +140,7 @@ describe('Card creation', () => {
     })
   })
     
-  context('Error scenarios', () => {
+  context.skip('Error scenarios', () => {
     it('Check error return if idList is missing', () => {
       createCard({
         ...fix.new.card
