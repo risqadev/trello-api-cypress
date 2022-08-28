@@ -37,16 +37,14 @@ Cypress.Commands.add('createBoard', () => {
       done: ''
     }
   }
-
   createBoard({...fix.new.board}).then(({status, body}) => {
     expect(status).to.eq(200)
     board.id = body.id
     getListsFromBoard (body.id)
   })
-
   cy.get('@get lists').then(({status, body}) => {
     expect(status).to.eq(200)
-    expect(body).to.be.an('array').and.to.have.lengthOf(3)
+    // expect(body).to.be.an('array').and.to.have.lengthOf(3)
     Object.keys(board.lists).forEach((key, i) => {
       board.lists[key] = body[i].id
     })
