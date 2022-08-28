@@ -90,7 +90,7 @@ describe('Card creation', () => {
       cy.get('@2ndCard').then(({body: {id}}) => deleteCard(id)).as('cleaning')
     })
 
-    it.only(`Should create a new card successfuly if sent a valid idList and other data, including "pos: 'bottom'".`, () => {
+    it(`Should create a new card successfuly if sent a valid idList and other data, including "pos: 'bottom'".`, () => {
       cy.get('@beforeAll').then(({id: boardId, lists}) => {
         const card = {
           ...fix.new.card,
@@ -125,25 +125,25 @@ describe('Card creation', () => {
       cy.get('@2ndCard').then(({body: {id}}) => deleteCard(id)).as('cleaning')
     })
 
-    it(`Should create a new card successfuly if sent a valid idList and other data, including "pos" as a positive float number.`, () => {
-      createCard({
-        ...fix.new.card,
-        pos: 0.0001
-      }).should(({status, body: {name, desc, pos, dueComplete, idBoard, idList}}) => {
-        expect(status).to.eq(200)
-        expect(pos).to.eq(0.0001)
-        // expect(body).to.have.property('id')
-        // expect(name).to.eq(fix.new.card.name)
-        // expect(desc).to.eq(fix.new.card.desc)
-        // expect(start).to.eq(fix.new.card.start)
-        // expect(idList).to.eq(fix.fixed.list.todo.id)
-        // expect(idBoard).to.eq(fix.fixed.board.id)
+    it.only(`Should create a new card successfuly if sent a valid idList and other data, including "pos" as a positive float number.`, () => {
+      cy.get('@beforeAll').then(({id: boardId, lists}) => {
+        const card = {
+          ...fix.new.card,
+          idList: lists.toDo,
+          pos: 0.13
+        }
+        // testing
+        createCard({
+          ...card
+        }).as('testCard').should(({status, body}) => {
+          expect(status).to.eq(200)
+          expect(body).to.have.property('id')
+          expect(body).contains(card)
+          expect(body.idBoard).to.eq(boardId)
+        })
       })
-  
       // cleaning
-      cy.get('@get card').then(({body: {id}}) => 
-        deleteCard(id)
-      ).as('cleaning')
+      cy.get('@testCard').then(({body: {id}}) => deleteCard(id)).as('cleaning')
     })
     
     it('Should create a copy of a existing card successfuly if sent a valid idCardSource', () => {
