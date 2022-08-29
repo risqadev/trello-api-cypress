@@ -8,36 +8,29 @@ import fix from '../../fixtures/trello.json'
 
 describe('Card creation', () => {
   before(function () {
-    cy.createBoard().as('beforeAll')
+    cy.createBoard().as('boardAndListsIds')
   })
 
   after(function () {
-    const {id} = this.beforeAll
+    const {id} = this.boardAndListsIds
     deleteBoard(id)
   })
     
   context('Success scenarios', () => {
     it('Should create a new card successfuly if sent only a valid idList', function () {
-      const {id, lists} = this.beforeAll
+      const {id, lists} = this.boardAndListsIds
+      // testing
       const card = {
         ...fix.new.emptyCard,
         idList: lists.toDo,
         idBoard: id
       }
-      // testing
       createCard({
         idList: card.idList
       }).should(({status, body}) => {
         expect(status).to.eq(200)
         expect(body).to.have.property('id').not.empty
         expect(body).contains(card)
-        /* const {name, desc, idBoard, idList, start, dueComplete} = body
-        expect(name).to.be.empty
-        expect(desc).to.be.empty
-        expect(start).to.be.null
-        expect(dueComplete).to.be.false
-        expect(idList).to.eq(firstList.id)
-        expect(idBoard).to.eq(firstList.idBoard) */
       })
       // cleaning
       cy.get('@new card').then(({body: {id}}) => {
@@ -46,7 +39,8 @@ describe('Card creation', () => {
     })
 
     it(`Should create a new card successfuly if sent 'top' string  in 'pos' field and a boolean in 'dueComplete' field.`, function () {      
-      const {id: boardId, lists} = this.beforeAll
+      const {id: boardId, lists} = this.boardAndListsIds
+      // testing
       const card1 = {
         ...fix.new.card,
         idList: lists.toDo,
@@ -56,7 +50,6 @@ describe('Card creation', () => {
         ...card1,
         dueComplete: true
       }
-      // testing
       createCard({
         ...card1,
         pos: 'top'
@@ -84,7 +77,7 @@ describe('Card creation', () => {
     })
 
     it(`Should create a new card successfuly if sent 'bottom' string  in 'pos' field and null in 'dueComplete' field.`, function () {
-      const {id: boardId, lists} = this.beforeAll
+      const {id: boardId, lists} = this.boardAndListsIds
       const card = {
         ...fix.new.card,
         dueComplete: false,
@@ -120,7 +113,7 @@ describe('Card creation', () => {
     })
 
     it(`Should create a new card successfuly if sent a positive float number in 'pos' field.`, function () {
-      const {id: boardId, lists} = this.beforeAll
+      const {id: boardId, lists} = this.boardAndListsIds
       const card = {
         ...fix.new.card,
         idList: lists.toDo,
@@ -140,7 +133,7 @@ describe('Card creation', () => {
     })
     
     it('Should create a copy of a existing card successfuly if sent a valid idCardSource', function () {
-      const {lists} = this.beforeAll
+      const {lists} = this.boardAndListsIds
       const card = {
         ...fix.new.card,
         idList: lists.toDo
@@ -190,7 +183,7 @@ describe('Card creation', () => {
     })
 
     it('Check error return if sent other string value in "pos" field', function () {
-      const {lists} = this.beforeAll
+      const {lists} = this.boardAndListsIds
       createCard({
         idList: lists.toDo,
         pos: 'other'
@@ -201,7 +194,7 @@ describe('Card creation', () => {
     })
 
     it('Check error return if sent negative number in "pos" field', function () {
-      const {lists} = this.beforeAll
+      const {lists} = this.boardAndListsIds
       createCard({
         idList: lists.toDo,
         pos: -1
@@ -212,7 +205,7 @@ describe('Card creation', () => {
     })
 
     it.skip('Check error return if sent boolean value in "pos" field', function () {
-      const {lists} = this.beforeAll
+      const {lists} = this.boardAndListsIds
       createCard({
         idList: lists.toDo,
         pos: false
@@ -233,7 +226,7 @@ describe('Card creation', () => {
     })
 
     it('Check error return if sent invalid datetime in "start" field', function () {
-      const {lists} = this.beforeAll
+      const {lists} = this.boardAndListsIds
       createCard({
         idList: lists.toDo,
         start: fix.fake.card.start
@@ -244,7 +237,7 @@ describe('Card creation', () => {
     })
 
     it.skip('Check error return if sent boolean value in "start" field', function () {
-      const {lists} = this.beforeAll
+      const {lists} = this.boardAndListsIds
       createCard({
         idList: lists.toDo,
         start: false
@@ -265,7 +258,7 @@ describe('Card creation', () => {
     })
     
     it.skip('Check error return if sent a string value in "dueComplete" field', function () {
-      const {lists} = this.beforeAll
+      const {lists} = this.boardAndListsIds
       createCard({
         idList: lists.toDo,
         dueComplete: 'other'
@@ -278,7 +271,7 @@ describe('Card creation', () => {
     })
 
     it.skip('Check error return if sent a number value in "dueComplete" field', function () {
-      const {lists} = this.beforeAll
+      const {lists} = this.boardAndListsIds
       createCard({
         idList: lists.toDo,
         dueComplete: 2
@@ -291,7 +284,7 @@ describe('Card creation', () => {
     })
     
     it('Check error return in copy creation if idCardSource is invalid', function () {
-      const {lists} = this.beforeAll
+      const {lists} = this.boardAndListsIds
       createCard({
         idCardSource: fix.fake.card.id,
         idList: lists.toDo
