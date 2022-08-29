@@ -60,7 +60,8 @@
     "card": {
       "id": "61bac1b3445f8834aaab8a5b",
       "name": "Fake card",
-      "desc": "This is a fake card and not exists in the system"
+      "desc": "This is a fake card and not exists in the system",
+      "start": "2022-12-31T24:00:01.000Z"
     }
   }
 }
