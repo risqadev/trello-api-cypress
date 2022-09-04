@@ -2,11 +2,12 @@
 
 import { requestHandler } from "../../utils/requestHandler"
 
-function createBoard(data) {
+function createBoard(body, headers) {
   return requestHandler({
     method: 'POST',
     url: `/1/boards/`,
-    body: { ...data },
+    body,
+    headers,
     failOnStatusCode: false
   }).as('new board')
 }

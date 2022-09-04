@@ -1,0 +1,10 @@
+{
+  "appKeyInvalid": "invalid key",
+  "tokenMissing": "unauthorized card permission requested",
+  "tokenWrong": "invalid token",
+  "idListMissing": "invalid value for idList",
+  "idListWrong": "could not find the board that the card belongs to",
+  "posInvalid": "Invalid position",
+  "dateInvalid": "invalid date",
+  "idCardSourceInvalid": "requested resource was not found"
+}

@@ -2,10 +2,11 @@
 
 import { requestHandler } from "../../utils/requestHandler"
 
-function getCardsByListId(listId) {
+function getCardsByListId(listId, headers) {
   return requestHandler({
     method: 'GET',
-    url: `/1/lists/${listId}/cards/`
+    url: `/1/lists/${listId}/cards/`,
+    headers
   }).as('get cards')
 }
 

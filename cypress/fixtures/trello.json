@@ -54,6 +54,8 @@
     }
   },
   "fake": {
+    "appKey": "3b15c2fac77e62d1bdaf6f70a95a0c8e",
+    "token": "50f15c76b4de9e1cf90a6443085c3c2a510060bcd7846ba25c1eb6ef860c6acd",
     "list": {
       "id": "6bd02c20cfdfa31398395620"
     },

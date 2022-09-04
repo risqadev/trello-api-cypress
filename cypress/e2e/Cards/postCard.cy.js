@@ -5,6 +5,7 @@ import { createCard } from '../../services/Cards/postCard.request'
 import { deleteCard } from '../../services/Cards/deleteCard.request'
 
 import fix from '../../fixtures/trello.json'
+import messages from '../../fixtures/messages.json'
 
 describe('Card creation', () => {
   before(function () {
@@ -163,12 +164,82 @@ describe('Card creation', () => {
   })
     
   context('Error scenarios', () => {
+    it('Check error return if appKey is missing', function () {
+      const {lists} = this.boardAndListsIds
+      const authorization = `OAuth oauth_token="${Cypress.env('TOKEN')}"`
+      // testing
+      createCard({
+        idList: lists.toDo
+      }, {
+        authorization
+      }).should(({status, body}) => {
+        expect(status).to.eq(401)
+        expect(body).contains(messages.appKeyInvalid)
+      })
+    })
+
+    it('Check error return if appKey is wrong', function () {
+      const {lists} = this.boardAndListsIds
+      const authorization = `OAuth oauth_consumer_key="${fix.fake.appKey}", oauth_token="${Cypress.env('TOKEN')}"`
+      // testing
+      createCard({
+        idList: lists.toDo
+      }, {
+        authorization
+      }).should(({status, body}) => {
+        expect(status).to.eq(401)
+        expect(body).contains(messages.appKeyInvalid)
+      })
+    })
+
+    it('Check error return if token is missing', function () {
+      const {lists} = this.boardAndListsIds
+      const authorization = `OAuth oauth_consumer_key="${Cypress.env('APP_KEY')}"`
+      // testing
+      createCard({
+        idList: lists.toDo
+      }, {
+        authorization
+      }).should(({status, body}) => {
+        expect(status).to.eq(401)
+        expect(body).contains(messages.tokenMissing)
+      })
+    })
+
+    it('Check error return if token is wrong', function () {
+      const {lists} = this.boardAndListsIds
+      const authorization = `OAuth oauth_consumer_key="${Cypress.env('APP_KEY')}", oauth_token="${fix.fake.token}"`
+      // testing
+      createCard({
+        idList: lists.toDo
+      }, {
+        authorization
+      }).should(({status, body}) => {
+        expect(status).to.eq(401)
+        expect(body).contains(messages.tokenWrong)
+      })
+    })
+
+    it('Check error return if request body is missing', function () {
+      const authorization = `OAuth oauth_consumer_key="${Cypress.env('APP_KEY')}", oauth_token="${Cypress.env('TOKEN')}"`
+      // testing
+      cy.request({
+        method: 'POST',
+        url: `/1/cards/`,
+        headers: { authorization },
+        failOnStatusCode: false
+      }).should(({status, body}) => {
+        expect(status).to.eq(400)
+        expect(body).contains(messages.idListMissing)
+      })
+    })
+
     it('Check error return if idList is missing', function () {
       createCard({
         ...fix.new.card
       }).should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body).contains('invalid value for idList')
+        expect(body).contains(messages.idListMissing)
       })
     })
 
@@ -178,7 +249,7 @@ describe('Card creation', () => {
         idList: fix.fake.list.id
       }).should(({status, body}) => {
         expect(status).to.eq(404)
-        expect(body).contains('could not find the board that the card belongs to')
+        expect(body).contains(messages.idListWrong)
       })
     })
 
@@ -189,7 +260,7 @@ describe('Card creation', () => {
         pos: 'other'
       }).should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body.message).contains('Invalid position')
+        expect(body.message).contains(messages.posInvalid)
       })
     })
 
@@ -200,7 +271,7 @@ describe('Card creation', () => {
         pos: -1
       }).should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body.message).contains('Invalid position')
+        expect(body.message).contains(messages.posInvalid)
       })
     })
 
@@ -211,14 +282,14 @@ describe('Card creation', () => {
         pos: false
       }).as('1stCard').should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body.message).contains('Invalid position')
+        expect(body.message).contains(messages.posInvalid)
       })
       createCard({
         idList: lists.toDo,
         pos: true
       }).as('2ndCard').should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body.message).contains('Invalid position')
+        expect(body.message).contains(messages.posInvalid)
       })
       // cleaning
       cy.get('@1stCard').then(({body: {id}}) => deleteCard(id)).as('cleaning')
@@ -232,7 +303,7 @@ describe('Card creation', () => {
         start: fix.fake.card.start
       }).should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body.message).contains('invalid date')
+        expect(body.message).contains(messages.dateInvalid)
       })
     })
 
@@ -243,14 +314,14 @@ describe('Card creation', () => {
         start: false
       }).as('1stCard').should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body.message).contains('invalid date')
+        expect(body.message).contains(messages.dateInvalid)
       })
       createCard({
         idList: lists.toDo,
         start: true
       }).as('2ndCard').should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body.message).contains('invalid date')
+        expect(body.message).contains(messages.dateInvalid)
       })
       // cleaning
       cy.get('@1stCard').then(({body: {id}}) => deleteCard(id)).as('cleaning')
@@ -264,7 +335,7 @@ describe('Card creation', () => {
         dueComplete: 'other'
       }).as('testCard').should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body.message).contains('invalid date')
+        expect(body.message).contains(messages.dateInvalid)
       })
       // cleaning
       cy.get('@testCard').then(({body: {id}}) => deleteCard(id)).as('cleaning')
@@ -277,7 +348,7 @@ describe('Card creation', () => {
         dueComplete: 2
       }).as('testCard').should(({status, body}) => {
         expect(status).to.eq(400)
-        expect(body.message).contains('invalid date')
+        expect(body.message).contains(messages.dateInvalid)
       })
       // cleaning
       cy.get('@testCard').then(({body: {id}}) => deleteCard(id)).as('cleaning')
@@ -290,7 +361,7 @@ describe('Card creation', () => {
         idList: lists.toDo
       }).should(({status, body}) => {
         expect(status).to.eq(404)
-        expect(body).contains('requested resource was not found')
+        expect(body).contains(messages.idCardSourceInvalid)
       })
     })
   })
