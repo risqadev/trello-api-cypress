@@ -50,12 +50,16 @@
     "card": {
       "name": "Card EDITED with Cypress",
       "desc": "This card was automatically EDITED by Ricardo using Cypress",
-      "idList": "62d95620cfdfa313983bd02b"
+      "start": "2022-08-16T03:00:00.000Z",
+      "dueComplete": true
     }
   },
   "fake": {
     "appKey": "3b15c2fac77e62d1bdaf6f70a95a0c8e",
     "token": "50f15c76b4de9e1cf90a6443085c3c2a510060bcd7846ba25c1eb6ef860c6acd",
+    "board": {
+      "id": "80a82910afdfa313983bd756"
+    },
     "list": {
       "id": "6bd02c20cfdfa31398395620"
     },
@@ -64,6 +68,8 @@
       "name": "Fake card",
       "desc": "This is a fake card and not exists in the system",
       "start": "2022-12-31T24:00:01.000Z"
-    }
+    },
+    "aString": "other",
+    "bigString": "500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string. | 500 characters string ..."
   }
 }

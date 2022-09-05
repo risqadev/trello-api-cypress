@@ -4,7 +4,10 @@
   "tokenWrong": "invalid token",
   "idListMissing": "invalid value for idList",
   "idListWrong": "could not find the board that the card belongs to",
+  "idListWrongUpdate": "does not exist on board",
+  "idBoardWrong": "Board not found",
   "posInvalid": "Invalid position",
   "dateInvalid": "invalid date",
-  "idCardSourceInvalid": "requested resource was not found"
+  "idInvalid": "requested resource was not found",
+  "putIdMissing": "Cannot PUT /1/cards/"
 }
