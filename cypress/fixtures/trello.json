@@ -24,7 +24,7 @@
     },
     "card": {
       "id": "62d958cda3ff0b7b2ad748f3",
-      "name": "Fixed card to tests with Cypress",
+      "name": "Fixed card to Cypress tests",
       "desc": "This card was created to tests with Cypress",
       "idList": "62d95620cfdfa313983bd02a"
     }

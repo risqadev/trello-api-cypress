@@ -4,7 +4,6 @@ import { deleteBoard } from '../../services/Boards/deleteBoard.request'
 import { createCard } from '../../services/Cards/postCard.request'
 import { editCard } from '../../services/Cards/putCard.request'
 import { deleteCard } from '../../services/Cards/deleteCard.request'
-// import { put }
 
 import fix from '../../fixtures/trello.json'
 import messages from '../../fixtures/messages.json'

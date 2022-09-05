@@ -9,5 +9,6 @@
   "posInvalid": "Invalid position",
   "dateInvalid": "invalid date",
   "idInvalid": "requested resource was not found",
-  "putIdMissing": "Cannot PUT /1/cards/"
+  "putIdMissing": "Cannot PUT /1/cards/",
+  "deleteIdMissing": "Cannot DELETE /1/cards/"
 }
