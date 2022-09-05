@@ -11,4 +11,12 @@ function getCard(id, headers) {
   }).as('get card')
 }
 
-export { getCard }
+function getCardsByListId(listId, headers) {
+  return requestHandler({
+    method: 'GET',
+    url: `/1/lists/${listId}/cards/`,
+    headers
+  }).as('get cards')
+}
+
+export { getCard, getCardsByListId }

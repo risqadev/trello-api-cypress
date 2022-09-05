@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import { createBoard } from '../services/Boards/postBoard.request'
-import { getListsFromBoard } from '../services/Lists/getListsFromBoard.request'
+import { getListsFromBoard } from '../services/Lists/getLists.request'
 import fix from '../fixtures/trello.json'
 
 Cypress.Commands.add('createBoard', () => {
