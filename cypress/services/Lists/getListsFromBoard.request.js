@@ -2,12 +2,12 @@
 
 import { requestHandler } from "../../utils/requestHandler"
 
-function getCardsByListId(listId, headers) {
+function getListsFromBoard(boardId, headers) {
   return requestHandler({
     method: 'GET',
-    url: `/1/lists/${listId}/cards/`,
+    url: `/1/boards/${boardId}/lists/`,
     headers
-  }).as('get cards')
+  }).as('get lists')
 }
 
-export { getCardsByListId }
+export { getListsFromBoard }

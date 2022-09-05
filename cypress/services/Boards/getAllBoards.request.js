@@ -2,13 +2,11 @@
 
 import { requestHandler } from "../../utils/requestHandler"
 
-function getCard(id, headers) {
+function getAllBoards() {
   return requestHandler({
     method: 'GET',
-    url: `/1/cards/${id}/`,
-    headers,
-    failOnStatusCode: false
-  }).as('get card')
+    url: `/1/members/me/boards`
+  }).as('get boards')
 }
 
-export { getCard }
+export { getAllBoards }

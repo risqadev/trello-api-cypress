@@ -4,3 +4,6 @@ secrets.json
 cypress.env.json
 cypress/screenshots/
 cypress/videos/
+cypress/e2e/residual-cleaning.cy.js
+cypress/e2e/Cards/test.cy.js
+cypress/fixtures/postCardResponse.json

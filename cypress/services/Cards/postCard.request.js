@@ -1,12 +1,13 @@
 /// <reference types='cypress' />
 
-import { requestHandler } from "../requestHandler"
+import { requestHandler } from "../../utils/requestHandler"
 
-function createCard(dataObject) {
+function createCard(body, headers) {
   return requestHandler({
     method: 'POST',
     url: `/1/cards/`,
-    body: { ...dataObject },
+    headers,
+    body,
     failOnStatusCode: false
   }).as('new card')
 }

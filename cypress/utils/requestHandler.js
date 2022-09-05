@@ -1,14 +1,14 @@
 /// <reference types='cypress' />
 
-function requestHandler(...args) {
+function requestHandler(data) {
   const authorization = `OAuth oauth_consumer_key="${Cypress.env('APP_KEY')}", oauth_token="${Cypress.env('TOKEN')}"`
-  if (args.length === 1 && typeof(args[0]) === 'object') {
-    args[0].headers = {
-      ...args[0].headers,
+  if (!data.headers || !data.headers.authorization) {
+    data.headers = {
+      ...data.headers,
       authorization
     }
   }
-  return cy.request(...args)
+  return cy.request({ ...data })
 }
 
 export { requestHandler }

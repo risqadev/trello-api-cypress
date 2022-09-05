@@ -1,0 +1,14 @@
+{
+  "appKeyInvalid": "invalid key",
+  "tokenMissing": "unauthorized card permission requested",
+  "tokenInvalid": "invalid token",
+  "idListMissing": "invalid value for idList",
+  "idListInvalid": "could not find the board that the card belongs to",
+  "idListInvalidUpdate": "does not exist on board",
+  "idBoardInvalid": "Board not found",
+  "posInvalid": "Invalid position",
+  "dateInvalid": "invalid date",
+  "idInvalid": "requested resource was not found",
+  "putIdMissing": "Cannot PUT /1/cards/",
+  "deleteIdMissing": "Cannot DELETE /1/cards/"
+}
