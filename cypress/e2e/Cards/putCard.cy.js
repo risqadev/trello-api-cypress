@@ -161,7 +161,7 @@ describe('Card update', () => {
       }).as('cleaning')
     })
 
-    it('Check error return if appKey is wrong', function () {
+    it('Check error return if appKey is invalid', function () {
       const { lists } = this.boardAndListsIds
       const authorization = `OAuth oauth_consumer_key="${fix.fake.appKey}", oauth_token="${Cypress.env('TOKEN')}"`
       // preparing
@@ -209,7 +209,7 @@ describe('Card update', () => {
       }).as('cleaning')
     })
 
-    it('Check error return if token is wrong', function () {
+    it('Check error return if token is invalid', function () {
       const { lists } = this.boardAndListsIds
       const authorization = `OAuth oauth_consumer_key="${Cypress.env('APP_KEY')}", oauth_token="${fix.fake.token}"`
       // preparing
@@ -224,7 +224,7 @@ describe('Card update', () => {
           authorization
         }).should(({ status, body }) => {
           expect(status).to.eq(401)
-          expect(body).contains(messages.tokenWrong)
+          expect(body).contains(messages.tokenInvalid)
         })
       })
       // cleaning
@@ -363,7 +363,7 @@ describe('Card update', () => {
           ...edit
         }).should(({ status, body }) => {
           expect(status).to.eq(404)
-          expect(body).contains(messages.idListWrongUpdate)
+          expect(body).contains(messages.idListInvalidUpdate)
         })
       })
       // cleaning
@@ -388,7 +388,7 @@ describe('Card update', () => {
           ...edit
         }).should(({ status, body }) => {
           expect(status).to.eq(404)
-          expect(body.message).contains(messages.idBoardWrong)
+          expect(body.message).contains(messages.idBoardInvalid)
         })
       })
       // cleaning
@@ -415,7 +415,7 @@ describe('Card update', () => {
           ...edit
         }).should(({ status, body }) => {
           expect(status).to.eq(404)
-          expect(body).contains(messages.idListWrongUpdate)
+          expect(body).contains(messages.idListInvalidUpdate)
         })
       })
       // cleaning

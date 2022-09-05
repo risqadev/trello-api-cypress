@@ -17,7 +17,7 @@ describe('Card creation', () => {
     deleteBoard(id)
   })
     
-  context.skip('Success scenarios', () => {
+  context('Success scenarios', () => {
     it('Should create a new card successfuly if sent only a valid idList', function () {
       const {id, lists} = this.boardAndListsIds
       // testing
@@ -178,7 +178,7 @@ describe('Card creation', () => {
       })
     })
 
-    it('Check error return if appKey is wrong', function () {
+    it('Check error return if appKey is invalid', function () {
       const { lists } = this.boardAndListsIds
       const authorization = `OAuth oauth_consumer_key="${fix.fake.appKey}", oauth_token="${Cypress.env('TOKEN')}"`
       // testing
@@ -206,7 +206,7 @@ describe('Card creation', () => {
       })
     })
 
-    it('Check error return if token is wrong', function () {
+    it('Check error return if token is invalid', function () {
       const { lists } = this.boardAndListsIds
       const authorization = `OAuth oauth_consumer_key="${Cypress.env('APP_KEY')}", oauth_token="${fix.fake.token}"`
       // testing
@@ -216,7 +216,7 @@ describe('Card creation', () => {
         authorization
       }).should(({ status, body }) => {
         expect(status).to.eq(401)
-        expect(body).contains(messages.tokenWrong)
+        expect(body).contains(messages.tokenInvalid)
       })
     })
 
@@ -249,7 +249,7 @@ describe('Card creation', () => {
         idList: fix.fake.list.id
       }).should(({ status, body }) => {
         expect(status).to.eq(404)
-        expect(body).contains(messages.idListWrong)
+        expect(body).contains(messages.idListInvalid)
       })
     })
 

@@ -114,7 +114,7 @@ describe('Card delete', () => {
           authorization
         }).should(({ status, body }) => {
           expect(status).to.eq(401)
-          expect(body).contains(messages.tokenWrong)
+          expect(body).contains(messages.tokenInvalid)
         })
       })
       // cleaning
